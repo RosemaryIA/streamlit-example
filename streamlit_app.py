@@ -3,38 +3,52 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-"""
-# Welcome to Streamlit!
+# @title
+!pip install nltk -q
+!pip install spacy -q
+!pip install tensorflow -q
+# @title
+from google.colab import userdata
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+#Configurações iniciais
+import google.generativeai as genai  #as : designa um apelido para a biblioteca
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+api_key = userdata.get("SECRET_KEY")
+#Configurações iniciais
+genai.configure(api_key=api_key)
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+import nltk
+import spacy
+import tensorflow as tf  # Usando um alias 'tf' para TensorFlow
+import nltk
+import spacy
+import tensorflow as tf  # Usando um alias 'tf' para TensorFlow
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+# Instalação (descomente as linhas se necessário)
+# !pip install nltk
+# !pip install textblob
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+# Importação
+import nltk
+from textblob import TextBlob
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+def chatbot_welovepizza():
+
+  # Mensagens iniciais
+  print("Olá! Agradecemos sua visita à WeLovePizza. Queremos saber sua opinião para melhorarmos ainda mais!")
+  print("Respondendo a esta pesquisa rápida, você concorre a 3 vinhos de sua escolha dentre uma seleção especial. 🍷")
+  print("Para conferir as opções, acesse este link: [Link para a carta de vinhos]\n")
+
+  # Perguntas e opções de resposta
+  perguntas = {
+      "experiencia": "Em uma escala de 0 a 10, sendo 0 “nada satisfeito” e 10 “extremamente satisfeito”, como você avalia sua experiência geral com a WeLovePizza hoje?",
+      "pontos_fortes": "O que você mais gosta na WeLovePizza? (Pode escolher mais de uma opção)\n a) Sabor das pizzas\n b) Variedade do cardápio\n c) Qualidade dos ingredientes\n d) Preço\n e) Atendimento\n f) Tempo de entrega\n g) Ambiente da loja\n h) Outro: __________",
+      "pontos_a_desenvolver": "O que poderíamos melhorar na WeLovePizza? (Pode escolher mais de uma opção)\n a) Sabor das pizzas\n b) Variedade do cardápio\n c) Qualidade dos ingredientes\n d) Preço\n e) Atendimento\n f) Tempo de entrega\n g) Ambiente da loja\n h) Outro: __________",
+      "frequencia_compra": "Nos últimos 3 meses, com que frequência você comprou pizzas?\n a) Somente na WeLovePizza\n b) Mais na WeLovePizza do que na concorrência\n c) Mais na concorrência do que na WeLovePizza\n d) Somente na concorrência",
+      "sentimento": "Qual palavra melhor descreve o que você sente pela WeLovePizza?\n a) Satisfação\n b) Confiança\n c) Indiferença\n d) Frustração\n e) Outro: __________",
+      "sugestoes": "Tem alguma sugestão para melhorarmos ainda mais?"
+  }
+
+
+
